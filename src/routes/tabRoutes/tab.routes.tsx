@@ -10,18 +10,30 @@ const Tab = createBottomTabNavigator();
 const TabRoutes = () => {
   return (
     <Tab.Navigator 
-        initialRouteName='Inital'
+        initialRouteName='Inital Page'
+        screenOptions={{
+            tabBarStyle:  {
+                backgroundColor: 'red',
+            },
+            tabBarActiveTintColor: 'white',
+            tabBarInactiveTintColor: 'black',
+            headerStyle: {
+                backgroundColor: 'red'
+            },
+            headerTintColor: 'white',
+            headerTitleAlign: 'center'
+        }}
     >
         <Tab.Screen
-            name='Initial'
+            name='Fitness App'
             component={InitialPage}
             options={{
-                tabBarIcon: ({color, size}) => <Feather name='home' color={color} size={size} />,
+                tabBarIcon: ({color, size}) => <Feather name='home' color={color } size={size} />,
                 tabBarLabel: 'Home'
             }}
         />
         <Tab.Screen
-            name='Home'
+            name='Mapa'
             component={Home}
             options={{
                 tabBarIcon: ({color, size}) => <Feather name='map' color={color} size={size} />,
