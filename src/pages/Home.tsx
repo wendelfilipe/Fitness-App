@@ -1,14 +1,20 @@
-import { getCurrentPositionAsync, requestForegroundPermissionsAsync, LocationObject, watchPositionAsync, LocationAccuracy } from 'expo-location'
+import { getCurrentPositionAsync, requestForegroundPermissionsAsync, LocationObject, watchPositionAsync, LocationAccuracy, LocationSubscription } from 'expo-location'
 import React, { useEffect, useRef, useState } from 'react'
 import { View, Text, Button } from 'react-native'
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import styles from '../styles/home';
+import {getDistance } from 'geolib';
 
-const Home = () => {
+interface HomeProps {
+  onDistanceChange: (distance: number) => void;
+}
+
+const Home: React.FC<HomeProps> = ({ onDistanceChange }) => {
   const [location, setLocation] = useState<LocationObject | null>(null);
   const [routeCoordinates, setRouteCoordinates] = useState<{ latitude: number, longitude: number }[]>([]);
+  const [totalDistance, setTotalDistance ] = useState<number>(0)
 
-  const mapRef = useRef<MapView>(null);
+  const mapRef = useRef<MapView | null>(null);
 
   async function requestLocationPermissions() {
    const { granted } = await requestForegroundPermissionsAsync();
@@ -21,6 +27,8 @@ const Home = () => {
 
   const clearRoute = () => {
     setRouteCoordinates([]);
+    setTotalDistance(0);
+    onDistanceChange(0);
   }
 
   useEffect(() => {
@@ -28,13 +36,26 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    watchPositionAsync({
-      accuracy: LocationAccuracy.Highest,
-      timeInterval: 1000,
-      distanceInterval: 1
-    }, (response) => {
+    let subscription: LocationSubscription;
+    const startWachingLocation = async () => {
+      watchPositionAsync({
+        accuracy: LocationAccuracy.Highest,
+        timeInterval: 1000,
+        distanceInterval: 1
+      }, (response) => {
 
       setLocation(response);
+
+      if(routeCoordinates.length > 0) {
+        const lastCoordinate = routeCoordinates[routeCoordinates.length -1 ];
+        const distance = getDistance(
+          {latitude: lastCoordinate.latitude, longitude: lastCoordinate.longitude},
+          {latitude: response.coords.latitude, longitude: response.coords.longitude}
+        );
+        const newTotalDistance = totalDistance + distance
+        setTotalDistance(newTotalDistance);
+        onDistanceChange(newTotalDistance);
+      }
 
       setRouteCoordinates((prevCoordinates) => [
         ...prevCoordinates, 
@@ -48,7 +69,13 @@ const Home = () => {
         center: response.coords
       })
     });
-  },[]);
+  };
+  startWachingLocation();
+
+    return () => {
+      subscription?.remove();
+    };
+  },[routeCoordinates, totalDistance]);
 
   return (
     <View style={styles.container}>
@@ -77,10 +104,11 @@ const Home = () => {
           />
         </MapView>
         <Button title='Limpar Rota' onPress={clearRoute}/>
+        <Text>Total Distance: {(totalDistance / 1000).toFixed(2)} Km</Text>
         </>
       }
     </View>
   )
 }
 
-export default Home
+export default Home;

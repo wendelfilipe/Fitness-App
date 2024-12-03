@@ -1,14 +1,17 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+    containerAll:{
+        flex: 1
+    },
     container:{
-        height: '20%',
+        flex:1,
         backgroundColor: 'grey',
         borderRadius: 15,
         margin: 5,
         borderWidth: 3,
         borderColor: 'white',
-        elevation: 15,
+        elevation: 25,
         padding: 10
     },
     info: {
@@ -28,6 +31,15 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
         fontWeight: 'bold'
+    },
+    statusContainer: {
+        backgroundColor: 'grey',
+        flex: 5,
+        margin: 5,
+        borderRadius: 15,
+        borderWidth: 3,
+        borderColor: 'white',
+        elevation: 25
     }
 
 })

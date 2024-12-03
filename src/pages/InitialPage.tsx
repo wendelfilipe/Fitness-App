@@ -18,16 +18,21 @@ const InitialPage = () => {
   }, []);
 
   return (
-   <View style={styles.container}>
-      <View style={styles.info}>
-        <View style={styles.containerImg}>
-          <Image/>
+   <View style={styles.containerAll}>
+      <View style={styles.container}>
+        <View style={styles.info}>
+          <View style={styles.containerImg}>
+            <Image/>
+          </View>
+          <View style={styles.containerProps}>
+            <Text style={styles.text}>Nome: {user?.name}</Text>
+            <Text style={styles.text}>Idade: {user?.idade}</Text>
+            <Text style={styles.text}>Peso: {user?.peso}</Text>
+          </View>
         </View>
-        <View style={styles.containerProps}>
-          <Text style={styles.text}>Nome: {user?.name}</Text>
-          <Text style={styles.text}>Idade: {user?.idade}</Text>
-          <Text style={styles.text}>Peso: {user?.peso}</Text>
-        </View>
+      </View>
+      <View style={styles.statusContainer}>
+        
       </View>
    </View>
   )

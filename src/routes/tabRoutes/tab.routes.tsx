@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import React from 'react'
+import React, { useState } from 'react'
 import Home from '../../pages/Home';
 import { Feather } from '@expo/vector-icons';
 import Status from '../../pages/Status';
@@ -7,10 +7,15 @@ import InitialPage from '../../pages/InitialPage';
 
 const Tab = createBottomTabNavigator();
 
-const TabRoutes = () => {
+const TabRoutes: React.FC = () => {
+    const [totalDistance, setTotalDistance] = useState<number>(0);
+
+    const handleDistanceChange = (distance: number) => {
+        setTotalDistance(distance);
+    };
   return (
     <Tab.Navigator 
-        initialRouteName='Inital Page'
+        initialRouteName='Login'
         screenOptions={{
             tabBarStyle:  {
                 backgroundColor: 'red',
@@ -34,7 +39,7 @@ const TabRoutes = () => {
         />
         <Tab.Screen
             name='Mapa'
-            component={Home}
+            children={() => <Home onDistanceChange={handleDistanceChange}/>}
             options={{
                 tabBarIcon: ({color, size}) => <Feather name='map' color={color} size={size} />,
                 tabBarLabel: 'Map'
