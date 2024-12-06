@@ -1,6 +1,6 @@
 import { getCurrentPositionAsync, requestForegroundPermissionsAsync, LocationObject, watchPositionAsync, LocationAccuracy, LocationSubscription } from 'expo-location'
 import React, { useEffect, useRef, useState } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, TouchableOpacity } from 'react-native'
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import styles from '../styles/home';
 import {getDistance } from 'geolib';
@@ -78,36 +78,44 @@ const Home: React.FC<HomeProps> = ({ onDistanceChange }) => {
   },[routeCoordinates, totalDistance]);
 
   return (
-    <View style={styles.container}>
+   <View style={styles.container}>
       { location && 
       <>
-        <MapView
-          style={styles.map}
-          ref={mapRef}
-          initialRegion={{
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005
-          }}
-        >
-          <Marker 
-            coordinate={{
+        <View style={styles.containerMap}>
+          <MapView
+            style={styles.map}
+            ref={mapRef}
+            initialRegion={{
               latitude: location.coords.latitude,
-              longitude: location.coords.longitude
+              longitude: location.coords.longitude,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005
             }}
-          />
-          <Polyline
-            coordinates={routeCoordinates}
-            strokeColor="#000" // Cor da linha
-            strokeWidth={3} // Largura da linha
-          />
-        </MapView>
-        <Button title='Limpar Rota' onPress={clearRoute}/>
+          >
+            <Marker 
+              coordinate={{
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude
+              }}
+            />
+            <Polyline
+              coordinates={routeCoordinates}
+              strokeColor="#000" // Cor da linha
+              strokeWidth={3} // Largura da linha
+            />
+          </MapView>
+        </View>
+        <View style={styles.containerButton}>
+              <TouchableOpacity style={styles.buttonClean} onPress={clearRoute}>
+                <Text style={styles.buttonCleanText}>
+                  Limpar Rota
+                </Text>
+              </TouchableOpacity>
+        </View>
         <Text>Total Distance: {(totalDistance / 1000).toFixed(2)} Km</Text>
         </>
       }
-    </View>
+   </View>
   )
 }
 

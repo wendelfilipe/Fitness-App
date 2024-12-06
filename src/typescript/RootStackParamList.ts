@@ -1,4 +1,5 @@
 export type RootStackParamList = {
     Login: undefined,
-    TabRoutes: undefined
+    TabRoutes: undefined,
+    DrawerRoutes: undefined 
 }

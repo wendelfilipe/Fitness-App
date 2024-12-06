@@ -22,27 +22,26 @@ const TabRoutes: React.FC = () => {
             },
             tabBarActiveTintColor: 'white',
             tabBarInactiveTintColor: 'black',
-            headerStyle: {
-                backgroundColor: 'red'
-            },
-            headerTintColor: 'white',
-            headerTitleAlign: 'center'
         }}
     >
         <Tab.Screen
-            name='Fitness App'
+            name='FitnessApp'
             component={InitialPage}
             options={{
                 tabBarIcon: ({color, size}) => <Feather name='home' color={color } size={size} />,
-                tabBarLabel: 'Home'
+                tabBarLabel: 'Home',
+                title: 'Fitness App',
+                headerShown: false
             }}
         />
         <Tab.Screen
-            name='Mapa'
+            name='Map'
             children={() => <Home onDistanceChange={handleDistanceChange}/>}
             options={{
                 tabBarIcon: ({color, size}) => <Feather name='map' color={color} size={size} />,
-                tabBarLabel: 'Map'
+                tabBarLabel: 'Mapa',
+                title: 'Mapa',
+                headerShown: false
             }}
         />
         <Tab.Screen
@@ -50,7 +49,9 @@ const TabRoutes: React.FC = () => {
             component={Status}
             options={{
                 tabBarIcon: ({color, size}) => <Feather name='info' color={color} size={size} />,
-                tabBarLabel: 'status'
+                tabBarLabel: 'status',
+                title: 'Status',
+                headerShown: false
             }}
         />
     </Tab.Navigator>

@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import styles from '../styles/initialPage'
 import { User } from '../interfaces/User'
+import { Props } from '../typescript/LoginScreenNavigationProp'
 
-const InitialPage = () => {
+const InitialPage: React.FC<Props> = ({navigation}) => {
   const [user, setUser] = useState<User | null>();
+
+  function clickBack() {
+    navigation.push('Login')
+  }
 
   useEffect(() => {
     const loadUser: User = {
@@ -32,7 +37,9 @@ const InitialPage = () => {
         </View>
       </View>
       <View style={styles.statusContainer}>
-        
+        <TouchableOpacity onPress={clickBack }style={styles.backButton}>
+          <Text style={styles.backButtonText}>Back</Text>
+        </TouchableOpacity>
       </View>
    </View>
   )
