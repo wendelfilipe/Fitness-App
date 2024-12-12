@@ -4,8 +4,9 @@ import Home from '../../pages/Home';
 import { Feather } from '@expo/vector-icons';
 import Status from '../../pages/Status';
 import InitialPage from '../../pages/InitialPage';
+import { RootStackParamList } from '../../typescript/RootStackParamList';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<RootStackParamList>();
 
 const TabRoutes: React.FC = () => {
     const [totalDistance, setTotalDistance] = useState<number>(0);
@@ -27,6 +28,7 @@ const TabRoutes: React.FC = () => {
         <Tab.Screen
             name='FitnessApp'
             component={InitialPage}
+            initialParams={{distance: totalDistance}}
             options={{
                 tabBarIcon: ({color, size}) => <Feather name='home' color={color } size={size} />,
                 tabBarLabel: 'Home',
@@ -41,16 +43,6 @@ const TabRoutes: React.FC = () => {
                 tabBarIcon: ({color, size}) => <Feather name='map' color={color} size={size} />,
                 tabBarLabel: 'Mapa',
                 title: 'Mapa',
-                headerShown: false
-            }}
-        />
-        <Tab.Screen
-            name='Status'
-            component={Status}
-            options={{
-                tabBarIcon: ({color, size}) => <Feather name='info' color={color} size={size} />,
-                tabBarLabel: 'status',
-                title: 'Status',
                 headerShown: false
             }}
         />

@@ -3,9 +3,14 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 import styles from '../styles/initialPage'
 import { User } from '../interfaces/User'
 import { Props } from '../typescript/LoginScreenNavigationProp'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { RootStackParamList } from '../typescript/RootStackParamList'
 
-const InitialPage: React.FC<Props> = ({navigation}) => {
+type InitialPageProps = NativeStackScreenProps<RootStackParamList, 'FitnessApp'>;
+
+const InitialPage: React.FC<InitialPageProps> = ({route, navigation}) => {
   const [user, setUser] = useState<User | null>();
+  const { distance } = route.params;
 
   function clickBack() {
     navigation.push('Login')
@@ -37,6 +42,7 @@ const InitialPage: React.FC<Props> = ({navigation}) => {
         </View>
       </View>
       <View style={styles.statusContainer}>
+        <Text>{distance}</Text>
         <TouchableOpacity onPress={clickBack }style={styles.backButton}>
           <Text style={styles.backButtonText}>Back</Text>
         </TouchableOpacity>

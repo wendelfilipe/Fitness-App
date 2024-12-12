@@ -1,5 +1,8 @@
 {
   "expo": {
+    "plugins": [
+      "expo-location"
+    ],
     "name": "fitness_app",
     "slug": "fitness_app",
     "version": "1.0.0",

@@ -1,7 +1,7 @@
 import { getCurrentPositionAsync, requestForegroundPermissionsAsync, LocationObject, watchPositionAsync, LocationAccuracy, LocationSubscription } from 'expo-location'
 import React, { useEffect, useRef, useState } from 'react'
-import { View, Text, Button, TouchableOpacity } from 'react-native'
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import { View, Text, TouchableOpacity } from 'react-native'
+import MapView, { Marker, Polyline, UrlTile } from 'react-native-maps';
 import styles from '../styles/home';
 import {getDistance } from 'geolib';
 
@@ -92,6 +92,11 @@ const Home: React.FC<HomeProps> = ({ onDistanceChange }) => {
               longitudeDelta: 0.005
             }}
           >
+            <UrlTile
+              urlTemplate="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              maximumZ={19}
+              flipY={false}
+            />
             <Marker 
               coordinate={{
                 latitude: location.coords.latitude,

@@ -1,6 +1,27 @@
 {
-  "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
-  }
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "expo-location": [
+        "node_modules/expo-location"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js"
+  ],
+  "extends": "expo/tsconfig.base"
 }
